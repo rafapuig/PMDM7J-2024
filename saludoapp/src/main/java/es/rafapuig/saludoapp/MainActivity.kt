@@ -17,10 +17,13 @@ class MainActivity : AppCompatActivity() {
         val NOMBRE = "es.rafapuig.saludoapp.MainActivity.NOMBRE"
     }
 
+    lateinit var button: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val button: Button = Button(this)
+        button = Button(this)
+
         button.text = "Haz click"
 
         setContentView(button)
@@ -33,16 +36,23 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SaludoActivity::class.java)
         intent.putExtra(NOMBRE, "Rafa Puig")
 
-        startActivity(intent)
-
+        //startActivity(intent)
+        startActivityForResult.launch(intent)
     }
+
 
     val startActivityForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result -> processResult(result) }
 
-    fun processResult(result: ActivityResult) {
 
+    fun processResult(result: ActivityResult) {
+       if(result.resultCode == RESULT_OK) {
+
+           val resultado = result.data?.getStringExtra("RESULTADO")
+
+           button.text = resultado
+       }
     }
 
 

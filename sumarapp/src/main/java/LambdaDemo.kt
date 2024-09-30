@@ -20,8 +20,7 @@ val multiplicar = { x: Int, y: Int -> x * y }
 
 fun main() {
 
-
-    // Variable para guardar operacion
+    // Variable para guardar operación
     var operacion: Operacion
 
     //Con una instancia de un objeto cuya clase implementa el interfaz
@@ -49,6 +48,12 @@ fun main() {
     operacion = Operacion(sumar)
     resultado = operacion.operar(4, 6)
     println(resultado)
+
+    //Lamar a un método de orden superior pasando una landa
+    resultado = realizarOperacion40y4 { x, y -> x + y }
+    println(resultado)
+
+    realizarOperacion(50, 5, sumar)
 
 
 
@@ -85,6 +90,6 @@ fun realizarOperacion(x: Int, y: Int, operacion: (Int, Int) -> Int) {
     println(r)
 }
 
-fun realizarOperacion2(operacion: Operacion): Int {
-    return operacion.operar(3, 4)
+fun realizarOperacion40y4(operacion: Operacion): Int {
+    return operacion.operar(40, 4)
 }

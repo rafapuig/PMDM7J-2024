@@ -1,5 +1,6 @@
 package es.rafapuig.saludoapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,13 @@ class SaludoActivity : AppCompatActivity() {
         textView.text= "Holaaa!!!!! $nombre"
 
         setContentView(textView)
+
+        textView.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("RESULTADO", "Cocacola")
+            setResult(RESULT_OK, intent)
+            finish()
+        }
 
     }
 }
