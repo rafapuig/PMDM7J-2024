@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/saludoapp" />
+            <option value="$PROJECT_DIR$/spinnerdemo" />
             <option value="$PROJECT_DIR$/sumarapp" />
           </set>
         </option>

@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "PMDM7J"
 include(":sumarapp")
 include(":saludoapp")
+include(":spinnerdemo")
