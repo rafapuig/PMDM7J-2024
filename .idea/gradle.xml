@@ -9,8 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/calculadora" />
+            <option value="$PROJECT_DIR$/permissiondemo" />
             <option value="$PROJECT_DIR$/saludoapp" />
             <option value="$PROJECT_DIR$/spinnerdemo" />
+            <option value="$PROJECT_DIR$/statechange" />
             <option value="$PROJECT_DIR$/sumarapp" />
           </set>
         </option>

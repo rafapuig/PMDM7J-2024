@@ -23,3 +23,6 @@ rootProject.name = "PMDM7J"
 include(":sumarapp")
 include(":saludoapp")
 include(":spinnerdemo")
+include(":calculadora")
+include(":statechange")
+include(":permissiondemo")
