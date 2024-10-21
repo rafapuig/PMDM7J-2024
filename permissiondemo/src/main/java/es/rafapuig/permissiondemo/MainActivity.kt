@@ -1,23 +1,63 @@
 package es.rafapuig.permissiondemo
 
+import android.Manifest.permission.CAMERA
 import android.Manifest.permission.RECORD_AUDIO
-import android.content.DialogInterface
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import es.rafapuig.permissiondemo.MainActivity.Companion.TAG
+
+
+class MiActivityResultCallback : ActivityResultCallback<Boolean> {
+    override fun onActivityResult(isGranted: Boolean) {
+        if (isGranted) {
+            Log.i(TAG, "El permiso de grabar audio ha sido DENEGADO por el usuario")
+        } else {
+            Log.i(TAG, "El permiso de grabar audio ha sido DENEGADO por el usuario")
+        }
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
-    val TAG = "Permission_Demo"
+    companion object {
+        val TAG = "Permission_Demo"
+    }
 
     val RECORD_AUDIO_REQUEST_CODE = 12345
+    val CAMERA_REQUEST_CODE = 888
+    val CAMERA_AND_RECORD_AUDIO_REQUEST_CODE = 1000
+
+
+    private val requestRecordAudioPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                Log.i(TAG, "El permiso de grabar audio ha sido DENEGADO por el usuario")
+            } else {
+                Log.i(TAG, "El permiso de grabar audio ha sido DENEGADO por el usuario")
+            }
+        }
+
+    private val requestCameraPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                Log.i(TAG, "El permiso de usar la camara ha sido DENEGADO por el usuario")
+            } else {
+                Log.i(TAG, "El permiso de usar la camara ha sido DENEGADO por el usuario")
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +108,12 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun makeRequest() {
-        requestPermissions(arrayOf(RECORD_AUDIO), RECORD_AUDIO_REQUEST_CODE)
+        //requestPermissions(arrayOf(RECORD_AUDIO), RECORD_AUDIO_REQUEST_CODE)
+        //requestRecordAudioPermissionLauncher.launch(RECORD_AUDIO)
+        //requestCameraPermissionLauncher.launch(CAMERA)
+
+        requestPermissions(arrayOf(CAMERA),CAMERA_REQUEST_CODE)
+        requestPermissions(arrayOf(CAMERA, RECORD_AUDIO), CAMERA_AND_RECORD_AUDIO_REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -87,7 +132,20 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Log.i(TAG, "El permiso de grabar audio ha sido CONCEDIDO por el usuario")
                 }
+            }
 
+            CAMERA_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PERMISSION_GRANTED) {
+                    Log.i(TAG, "El permiso de usar la camara ha sido DENEGADO por el usuario")
+                } else {
+                    Log.i(TAG, "El permiso de usar la camara ha sido CONCEDIDO por el usuario")
+                }
+            }
+
+            CAMERA_AND_RECORD_AUDIO_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PERMISSION_GRANTED || grantResults[1] != PERMISSION_GRANTED) {
+                  
+                }
             }
         }
 

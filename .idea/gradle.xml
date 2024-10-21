@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/calculadora" />
+            <option value="$PROJECT_DIR$/implicitintent" />
             <option value="$PROJECT_DIR$/permissiondemo" />
             <option value="$PROJECT_DIR$/saludoapp" />
             <option value="$PROJECT_DIR$/spinnerdemo" />
