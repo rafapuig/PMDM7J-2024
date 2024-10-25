@@ -27,4 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/call" />
+
+    <EditText
+        android:id="@+id/edit_url_to_navigate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="http://"
+        android:inputType="text|textUri" />
+
+    <Button
+        android:id="@+id/navigate_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigate" />
 </LinearLayout>

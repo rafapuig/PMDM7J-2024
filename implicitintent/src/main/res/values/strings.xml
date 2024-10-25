@@ -3,4 +3,5 @@
     <string name="take_a_photo">Take a photo</string>
     <string name="insert_phone_number">Insert phone number</string>
     <string name="call">Call</string>
+    <string name="navigate">Navigate</string>
 </resources>

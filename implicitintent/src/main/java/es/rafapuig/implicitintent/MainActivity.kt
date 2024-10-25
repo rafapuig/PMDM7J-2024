@@ -23,9 +23,11 @@ class MainActivity : AppCompatActivity() {
     private val callPermissionRequestLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) makePhoneCall()
-        }
+        ) { onRequestCallPermissionResult(it) }
+
+    private fun onRequestCallPermissionResult(isGranted: Boolean) {
+        if (isGranted) makePhoneCall()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -48,11 +50,33 @@ class MainActivity : AppCompatActivity() {
     private fun initListeners() {
         binding.takePhotoButton.setOnClickListener { onTakingPhoto() }
         binding.callButton.setOnClickListener { onMakingACall() }
+        binding.navigateButton.setOnClickListener { onNavigatingToURL() }
     }
+
+    private fun onNavigatingToURL() {
+        val url = getURLToNavigate()
+        navigateTo(url)
+    }
+
+    fun getURLToNavigate() = binding.editUrlToNavigate.text.toString()
+
+    fun navigateTo(url: String) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_VIEW
+
+        val uri = with(url) {
+            val needsPrefix = !startsWith("https://") && !startsWith("http://")
+            "${if (needsPrefix) "http://" else ""}$this"
+        }
+
+        intent.data = Uri.parse(uri)
+        startActivity(intent)
+    }
+
 
     private fun onMakingACall() {
         if (checkSelfPermission(CALL_PHONE) != PERMISSION_GRANTED) {
-            if(shouldShowRequestPermissionRationale(CALL_PHONE)) {
+            if (shouldShowRequestPermissionRationale(CALL_PHONE)) {
                 showUIRationale()
             } else {
                 requestCallPermission()
@@ -66,14 +90,15 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Solicitud de permiso de llamadas")
             .setMessage("Es necesario que permitas hacer llamadas a la aplicacion")
-            .setPositiveButton("OK"
+            .setPositiveButton(
+                "OK"
             ) { dialog, which -> requestCallPermission() }
             .create()
             .show()
     }
 
     private fun requestCallPermission() {
-        callPermissionRequestLauncher.launch(CALL_PHONE)
+        val isGranted = callPermissionRequestLauncher.launch(CALL_PHONE)
     }
 
     private fun makePhoneCall() {
