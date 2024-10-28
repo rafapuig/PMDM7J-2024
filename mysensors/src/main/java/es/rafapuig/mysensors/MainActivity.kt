@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -67,7 +68,10 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    currentSensor = sensors[position]
+                     val sensorName = parent?.let {
+                         it.adapter?.getItem(position) as String
+                     }
+                    currentSensor = sensors.firstOrNull { it.name == sensorName }  //sensors[position]
                     updateUI()
                 }
 
@@ -81,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             currentSensor?.let {
                 sensorVendor.text = it.vendor ?: ""
-                sensorType.text = getSensorTypeName(it.type)
+                sensorType.text =  currentSensor?.stringType //getSensorTypeName(it.type)
             }
         }
     }
